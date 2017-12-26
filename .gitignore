@@ -16,10 +16,10 @@ void output_mas(unsigned int mas[4][4]) {
 	for (unsigned int i = 0; i < 4; ++i) {
 		for (unsigned int j = 0; j < 4; ++j) {
 			if (mas[i][j] == 0) {
-				cout << "* ";
+				cout << "*\t";
 			}
 			else {
-				cout << mas[i][j] << " ";
+				cout << mas[i][j] << " \t";
 			}
 		}
 		cout << endl;
