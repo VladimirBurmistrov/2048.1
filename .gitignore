@@ -1,32 +1,219 @@
-# Prerequisites
-*.d
+#include "stdafx.h"
+#include <iostream>
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+using namespace std;
 
-# Precompiled Headers
-*.gch
-*.pch
+void input_mas(unsigned int  mas[4][4]) {
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+	for (unsigned int i = 0; i < 4; i++) {
+		for (unsigned int j = 0; j < 4; j++) {
+			cin >> mas[i][j];
+		}
+	}
+}
+void output_mas(unsigned int mas[4][4]) {
+	cout << endl;
+	for (unsigned int i = 0; i < 4; ++i) {
+		for (unsigned int j = 0; j < 4; ++j) {
+			if (mas[i][j] == 0) {
+				cout << "* ";
+			}
+			else {
+				cout << mas[i][j] << " ";
+			}
+		}
+		cout << endl;
+	}
+}
 
-# Fortran module files
-*.mod
-*.smod
+void down(unsigned int mas[4][4]) {
+	{
+		for (unsigned int j = 0; j < 4; j++) {
+			for (unsigned int i = 3; i > 0; i--) {
+				if (mas[i][j] == 0) {
+					for (int k = i - 1; k >= 0; k--) {
+						if (mas[k][j] != 0) {
+							mas[i][j] = mas[k][j];
+							mas[k][j] = 0;
+							break;
+						}
+					}
+				}
+			}
+		}
+		for (unsigned int j = 0; j < 4; j++) {
+			for (unsigned int i = 3; i > 0; i--) {
+				if (mas[i][j] == mas[i - 1][j]) {
+					mas[i][j] *= 2;
+					mas[i - 1][j] = 0;
+				}
+			}
+		}
+		for (unsigned int j = 0; j < 4; j++) {
+			for (unsigned int i = 3; i > 0; i--) {
+				if (mas[i][j] == 0) {
+					for (int k = i - 1; k >= 0; k--) {
+						if (mas[k][j] != 0) {
+							mas[i][j] = mas[k][j];
+							mas[k][j] = 0;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+void up(unsigned int mas[4][4]) {
+	for (unsigned int j = 0; j < 4; j++) {
+		for (unsigned int i = 0; i < 4; i++) {
+			if (mas[i][j] == 0) {
+				for (int k = i + 1; k < 4; k++) {
+					if (mas[k][j] != 0) {
+						mas[i][j] = mas[k][j];
+						mas[k][j] = 0;
+						break;
+					}
+				}
+			}
+		}
+	}
+	for (unsigned int j = 0; j < 4; j++) {
+		for (unsigned int i = 0; i < 4; i++) {
+			if (mas[i][j] == mas[i + 1][j]) {
+				mas[i][j] *= 2;
+				mas[i + 1][j] = 0;
+			}
+		}
+	}
+	for (unsigned int j = 0; j < 4; j++) {
+		for (unsigned int i = 0; i < 4; i++) {
+			if (mas[i][j] == 0) {
+				for (int k = i + 1; k < 4; k++) {
+					if (mas[k][j] != 0) {
+						mas[i][j] = mas[k][j];
+						mas[k][j] = 0;
+						break;
+					}
+				}
+			}
+		}
+	}
+}
 
-# Executables
-*.exe
-*.out
-*.app
+void left(unsigned int mas[4][4]) {
+	for (unsigned int i = 0; i < 4; i++) {
+		for (unsigned int j = 0; j < 3; j++) {
+			if (mas[i][j] == 0) {
+				for (int k = j + 1; k <= 3; k++) {
+					if (mas[i][k] != 0) {
+						mas[i][j] = mas[i][k];
+						mas[i][k] = 0;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	for (unsigned int i = 0; i < 4; i++) {
+		for (unsigned int j = 0; j < 3; j++)
+			if (mas[i][j] == mas[i][j + 1]) {
+				mas[i][j] *= 2;
+				mas[i][j + 1] = 0;
+			}
+	}
+
+	for (unsigned int i = 0; i < 4; i++) {
+		for (unsigned int j = 0; j < 3; j++)
+			if (mas[i][j] == 0) {
+				for (int k = j + 1; k <= 3; k++) {
+					if (mas[i][k] != 0) {
+						mas[i][j] = mas[i][k];
+						mas[i][k] = 0;
+						break;
+					}
+				}
+			}
+	}
+}
+
+void right(unsigned int mas[4][4]) {
+	for (unsigned int i = 0; i < 4; i++) {
+		for (unsigned int j = 3; j > 0; j--) {
+			if (mas[i][j] == 0) {
+				for (int k = j - 1; k >= 0; k--) {
+					if (mas[i][k] != 0) {
+						mas[i][j] = mas[i][k];
+						mas[i][k] = 0;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	for (unsigned int i = 0; i < 4; i++) {
+		for (unsigned int j = 3; j > 0; j--) {
+			if (mas[i][j] == mas[i][j - 1]) {
+				mas[i][j] *= 2;
+				mas[i][j - 1] = 0;
+			}
+		}
+	}
+
+	for (unsigned int i = 0; i < 4; i++) {
+		for (unsigned int j = 3; j > 0; j--) {
+			if (mas[i][j] == 0) {
+				for (int k = j - 1; k >= 0; k--) {
+					if (mas[i][k] != 0) {
+						mas[i][j] = mas[i][k];
+						mas[i][k] = 0;
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+int main()
+{
+	unsigned int mas[4][4];
+	int ex;
+	input_mas(mas);
+	output_mas(mas);
+	char op;
+	while (cin >> op) {
+		switch (op) {
+		case 's': {
+			down(mas);
+			output_mas(mas);
+			break;
+		}
+		case 'w': {
+			up(mas);
+			output_mas(mas);
+			break;
+		}
+		case 'a': {
+			left(mas);
+			output_mas(mas);
+			break;
+		}
+		case 'd': {
+			right(mas);
+			output_mas(mas);
+			break;
+		}
+		case 'q': {
+			return 0;
+		}
+		default: {
+			cout << " Error move" << endl; break;
+		}
+		}
+	}
+	return 0;
+}
